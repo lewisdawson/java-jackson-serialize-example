@@ -1,0 +1,8 @@
+### java ###
+*.class
+*.jar
+**/target
+
+### Intellij ###
+.idea/**
+*.iml
