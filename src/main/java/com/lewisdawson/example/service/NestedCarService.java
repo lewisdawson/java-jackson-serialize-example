@@ -11,10 +11,15 @@ import com.lewisdawson.example.model.NestedCarModel;
 import java.io.IOException;
 
 /**
+ * A service that can be instantiated to (de)serialize {@link NestedCarModel} objects to and from json.
+ *
  * @author Lewis Dawson <ldawson7777@yahoo.com>
  */
 public class NestedCarService {
 
+    /**
+     * The json path to the data that maps to the {@link NestedCarModel} object.
+     */
     private final String[] modelTraversalPath;
 
     private ObjectMapper objectMapper;
@@ -25,15 +30,22 @@ public class NestedCarService {
         initObjectMapper();
     }
 
+    /**
+     * Initializes the {@link ObjectMapper} used by the service. This includes the registration of custom (de)serializers.
+     */
     private void initObjectMapper() {
         objectMapper = new ObjectMapper();
 
+        // Registers the custom deserializer
         objectMapper.registerModule(new DeserializerModule(new DeserializerModifier(objectMapper, modelTraversalPath)));
     }
 
     /**
+     * Deserializes the parameter json to a {@link NestedCarModel} object.
+     *
      * @param nestedCarModelJson
-     * @return
+     *          The json {@link String} to deserialize.
+     * @return The {@link NestedCarModel} object that represents the parameter json String
      */
     public NestedCarModel deserialize(String nestedCarModelJson) throws IOException, JsonParseException, JsonMappingException {
         return objectMapper.readValue(nestedCarModelJson, NestedCarModel.class);
@@ -73,7 +85,7 @@ public class NestedCarService {
     }
 
     /**
-     * A Jackson {@link BeanDeserializerModifier} instance used to define the {@link NestedCarModelDeserializer} as the deserializer for a {@link NestedCarModel} instance.
+     * A Jackson {@link BeanDeserializerModifier} instance used to define the {@link NestedCarModelDeserializer} as the deserializer for a {@link NestedCarModel} instance. Note that the {@link NestedCarModelDeserializer} is only used when the bean being deserialized is a {@link NestedCarModel}.
      *
      * @author Lewis Dawson <lewis_dawson@intuit.com>
      */
@@ -93,6 +105,7 @@ public class NestedCarService {
          */
         @Override
         public JsonDeserializer<?> modifyDeserializer(DeserializationConfig config, BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
+            // If the bean being deserialized is a NestedCarModel, use the customer deserializer
             if (NestedCarModel.class.equals(beanDesc.getBeanClass())) {
                 return new NestedCarModelDeserializer(deserializer, objectMapper, modelTraversalPath);
             }

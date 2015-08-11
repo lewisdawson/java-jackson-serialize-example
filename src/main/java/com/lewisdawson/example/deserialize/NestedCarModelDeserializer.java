@@ -11,18 +11,41 @@ import com.lewisdawson.example.model.NestedCarModel;
 import java.io.IOException;
 
 /**
- * Created by ldawson on 8/10/15.
+ * A custom deserializer used to deserialize json to a {@link NestedCarModel} object.
+ *
+ * @author Lewis Dawson <ldawson7777@yahoo.com>
  */
 public class NestedCarModelDeserializer extends StdDeserializer<NestedCarModel> implements ResolvableDeserializer {
 
+    /**
+     * The default {@link JsonDeserializer}, created by Jackson, that we will delegate to for deserialization of the json.
+     */
     private final JsonDeserializer<?> defaultJsonDeserializer;
 
+    /**
+     * The {@link ObjectMapper} used to create tree data.
+     */
     private final ObjectMapper objectMapper;
 
+    /**
+     * The json path to the data that maps to the {@link NestedCarModel} object.
+     */
     private final String[] modelTraversalPath;
 
+    /**
+     * The {@link JsonFactory} used to create {@link JsonParser} instances.
+     */
     private final JsonFactory jsonFactory;
 
+    /**
+     *
+     * @param defaultJsonDeserializer
+     *          The {@link JsonDeserializer} that will be used to delegate deserialization to
+     * @param objectMapper
+     *          Used to create tree data
+     * @param modelTraversalPath
+     *          The json path to the data that maps to the {@link NestedCarModel} object.
+     */
     public NestedCarModelDeserializer(JsonDeserializer<?> defaultJsonDeserializer, ObjectMapper objectMapper, String[] modelTraversalPath) {
         super(NestedCarModel.class);
 
@@ -38,6 +61,7 @@ public class NestedCarModelDeserializer extends StdDeserializer<NestedCarModel> 
     @Override
     public NestedCarModel deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+
         // Iterate down the json tree until we get to the content portion...the portion that maps to the NestedCarModel
         for(String nodePath : modelTraversalPath) {
             node = node.findValue(nodePath);
@@ -45,17 +69,16 @@ public class NestedCarModelDeserializer extends StdDeserializer<NestedCarModel> 
                 throw new IllegalStateException("Unexpected json traversal path format!");
             }
         }
+        // Close the original parser since we don't need it anymore
         jsonParser.close();
 
-        ObjectMapper om = new ObjectMapper();
-        String treeString = om.writeValueAsString(om.treeToValue(node, Object.class));
+        String treeString = objectMapper.writeValueAsString(objectMapper.treeToValue(node, Object.class));
+        // Create a new parser where the root of the json is the NestedCarModel portion
         JsonParser newParser = jsonFactory.createParser(treeString);
-        // Queue the first token for the deserialization
+        // Queue the first token for the deserialization (NOTE: this is important--you get a NullPointerException without it)
         newParser.nextToken();
 
-        NestedCarModel model = (NestedCarModel) defaultJsonDeserializer.deserialize(newParser, deserializationContext);
-
-        return model;
+        return (NestedCarModel) defaultJsonDeserializer.deserialize(newParser, deserializationContext);
     }
 
     /**

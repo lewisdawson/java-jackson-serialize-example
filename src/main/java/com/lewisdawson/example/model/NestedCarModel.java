@@ -3,7 +3,9 @@ package com.lewisdawson.example.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by ldawson on 8/10/15.
+ * Represents information about a car.
+ *
+ * @author Lewis Dawson <ldawson7777@yahoo.com>
  */
 public class NestedCarModel {
 
