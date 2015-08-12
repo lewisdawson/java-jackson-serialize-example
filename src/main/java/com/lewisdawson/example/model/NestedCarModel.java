@@ -1,6 +1,8 @@
 package com.lewisdawson.example.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
  * Represents information about a car.
@@ -74,4 +76,41 @@ public class NestedCarModel {
     public void setMileage(Integer mileage) {
         this.mileage = mileage;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        NestedCarModel that = (NestedCarModel) o;
+
+        return new EqualsBuilder()
+                .append(this.trim, that.trim)
+                .append(this.engineSize, that.engineSize)
+                .append(this.tireSize, that.tireSize)
+                .append(this.vin, that.vin)
+                .append(this.price, that.price)
+                .append(this.mileage, that.mileage)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        int initialPrime = 17;
+        int multiplierPrime = 31;
+
+        return new HashCodeBuilder(initialPrime, multiplierPrime)
+                .append(this.trim)
+                .append(this.engineSize)
+                .append(this.tireSize)
+                .append(this.vin)
+                .append(this.price)
+                .append(this.mileage)
+                .toHashCode();
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.lewisdawson.example.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import com.lewisdawson.example.model.NestedCarModel;
@@ -14,7 +15,7 @@ import org.junit.Test;
 public class NestedCarServiceTest {
 
     /**
-     * The name of the test json file to load.
+     * The name of the test json file to load. Note that the unformatted version is loaded so it can be asserted.
      */
     private static final String JSON_FILE = "NestedCarModel.json";
 
@@ -34,6 +35,11 @@ public class NestedCarServiceTest {
     private String nestedCarModelJson;
 
     /**
+     * The {@link NestedCarModel} that represents the json stored in the {@link #JSON_FILE}.
+     */
+    private NestedCarModel nestedCarModel;
+
+    /**
      * Constructs the test. It creates a new service for (de)serialization and loads the test json file.
      *
      * @throws Exception
@@ -43,6 +49,7 @@ public class NestedCarServiceTest {
         nestedCarService = new NestedCarService(JSON_TRAVERSAL_PATH);
 
         loadJsonFile();
+        createNestedCarModel();
     }
 
     /**
@@ -56,15 +63,45 @@ public class NestedCarServiceTest {
     }
 
     /**
-     * Tests the service to verify that it (de)serializes properly.
+     * Creates a {@link NestedCarModel} object that represents the json stored in the {@link #JSON_FILE}.
+     */
+    private void createNestedCarModel() {
+        nestedCarModel = new NestedCarModel();
+
+        nestedCarModel.setEngineSize("2.0L");
+        nestedCarModel.setMileage(30000);
+        nestedCarModel.setPrice(15000);
+        nestedCarModel.setTireSize("215/45/17");
+        nestedCarModel.setTrim("si");
+        nestedCarModel.setVin("234HY345858BH9342437");
+    }
+
+    /**
+     * Tests the service to verify that it deserializes properly.
      *
      * @throws Exception
-     *          If an error occurs during (de)serialization
+     *          If an error occurs during deserialization
      */
     @Test
-    public void testService() throws Exception {
+    public void testDeserialize() throws Exception {
         NestedCarModel deserializedModel = nestedCarService.deserialize(nestedCarModelJson);
+
         assertNotNull(deserializedModel);
+        assertEquals(nestedCarModel, deserializedModel);
+    }
+
+    /**
+     * Tests the service to verify that it serializes properly.
+     *
+     * @throws Exception
+     *          If an error occurs during serialization
+     */
+    @Test
+    public void testSerialize() throws Exception {
+        String serializedModelJson = nestedCarService.serialize(nestedCarModel);
+
+        assertNotNull(serializedModelJson);
+        assertEquals(serializedModelJson, nestedCarModelJson);
     }
 
 }
