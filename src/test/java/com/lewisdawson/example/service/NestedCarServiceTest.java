@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * A JUnit test that demonstrates the serialization and deserialization of a {@link NestedCarModel} object using the {@link NestedCarService}.
  *
- * @author Lewis Dawson <ldawson7777@yahoo.com>
+ * @author Lewis Dawson <lew.dawson@lewdawson.com>
  */
 public class NestedCarServiceTest {
 

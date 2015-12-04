@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * A custom serializer used to serialize a {@link NestedCarModel} object into a json string.
  *
- * @author Lewis Dawson <ldawson7777@yahoo.com>
+ * @author Lewis Dawson <lew.dawson@lewdawson.com>
  */
 public class NestedCarModelSerializer extends StdSerializer implements ResolvableSerializer {
 

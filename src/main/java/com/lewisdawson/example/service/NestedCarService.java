@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * A service that can be instantiated to (de)serialize {@link NestedCarModel} objects to and from json.
  *
- * @author Lewis Dawson <ldawson7777@yahoo.com>
+ * @author Lewis Dawson <lew.dawson@lewdawson.com>
  */
 public class NestedCarService {
 
@@ -77,7 +77,7 @@ public class NestedCarService {
     /**
      * A Jackson {@link SimpleModule} used to register a customized deserializer.
      *
-     * @author Lewis Dawson <ldawson7777@yahoo.com>
+     * @author Lewis Dawson <lew.dawson@lewdawson.com>
      */
     private static final class DeserializerModule extends SimpleModule {
 
@@ -104,7 +104,7 @@ public class NestedCarService {
      * deserializer for a {@link NestedCarModel} instance. Note that the {@link NestedCarModelDeserializer} is only used
      * when the bean being deserialized is a {@link NestedCarModel}.
      *
-     * @author Lewis Dawson <lewis_dawson@intuit.com>
+     * @author Lewis Dawson <lew.dawson@lewdawson.com>
      */
     private final class DeserializerModifier extends BeanDeserializerModifier {
 
@@ -126,7 +126,7 @@ public class NestedCarService {
     /**
      * A Jackson {@link SimpleModule} used to register a customized serializer.
      *
-     * @author Lewis Dawson <ldawson7777@yahoo.com>
+     * @author Lewis Dawson <lew.dawson@lewdawson.com>
      */
     private static final class SerializerModule extends SimpleModule {
 
@@ -153,7 +153,7 @@ public class NestedCarService {
      * serializer for a {@link NestedCarModel} instance. Note that the {@link NestedCarModelSerializer} is only used
      * when the bean being serialized is a {@link NestedCarModel}.
      *
-     * @author Lewis Dawson <lewis_dawson@intuit.com>
+     * @author Lewis Dawson <lew.dawson@lewdawson.com>
      */
     private final class SerializerModifier extends BeanSerializerModifier {
 

@@ -7,7 +7,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 /**
  * Represents information about a car.
  *
- * @author Lewis Dawson <ldawson7777@yahoo.com>
+ * @author Lewis Dawson <lew.dawson@lewdawson.com>
  */
 public class NestedCarModel {
 

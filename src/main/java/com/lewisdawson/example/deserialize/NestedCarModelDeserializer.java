@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * A custom deserializer used to deserialize json to a {@link NestedCarModel} object.
  *
- * @author Lewis Dawson <ldawson7777@yahoo.com>
+ * @author Lewis Dawson <lew.dawson@lewdawson.com>
  */
 public class NestedCarModelDeserializer extends StdDeserializer<NestedCarModel> implements ResolvableDeserializer {
 
